@@ -1,0 +1,12 @@
+{
+  me {
+    homes {
+      electricVehicles {
+        lastSeen
+        battery {
+          percent
+        }
+      }
+    }
+  }
+}

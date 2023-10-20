@@ -1,0 +1,15 @@
+{
+  me {
+    homes {
+      bubbles {
+        id
+        type
+        title
+        context {
+          key
+        	value
+        }
+      }
+    }
+  }
+}

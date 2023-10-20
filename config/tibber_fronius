@@ -1,0 +1,31 @@
+{
+  me {
+    homes {
+      bubbles {
+        id
+        type
+        title
+        context {
+          key
+        	value
+        }
+      }
+      # enter here the id of your inverter
+      consumption: inverter (id:"12345678-9012-3456-7890-1234567890ab") {
+        siteTitle
+        description
+        bubble {
+          value
+        }
+      }
+      # enter here the id of your inverter
+      production: inverter (id:"ba0987654321-0987-6543-2109-87654321") {
+        siteTitle
+        description
+        bubble {
+          value
+        }
+      }
+    }
+  }
+}
