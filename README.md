@@ -62,10 +62,15 @@ docker run -d --restart=always \
   -e TIBBER2MQTT_MQTT_SINGLE=1 \
   freakern/tibber2mqtt
 ```
-When you have your query ready, place the textfile with the Query in the config folder and add the ENV Variable (before the last line):
-- -e TIBBER2MQTT_QUERY_FILENAME="your_file_name" \
+> Cache is a simple "Do not publish the same value again" and the Single Parameter is to send each value individually else it would publish the entire json each time (if it's not cached)
 
-> Cache is a simple "Do not publish the same value again" and the Single Parameter is to send each value individually else it would publish the entire json each time (if it's not cached) 
+
+When you have your query ready, place the textfile with the Query in the config folder and add the ENV Variable (before the last line):
+```bash
+-v ${PWD}/config:/app/config \
+-e TIBBER2MQTT_QUERY_FILENAME="your_file_name" \
+```
+
 ## Help
 
 #### Shell Parameter
