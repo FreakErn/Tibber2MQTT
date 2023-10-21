@@ -1,7 +1,7 @@
 # Tibber2MQTT
+<base target="_blank">
 
 This is a little helper Tool, that requests the Data from tibber and publishes the result in the MQTT Broker
-
 ## Description
 
 Tibber offers a pretty decent api which can be used to request a lot of data. You can request information from Tibber itself or connect your devices to Tibber and request even that information.
@@ -118,23 +118,24 @@ MQTT:
 ```
 
 #### Docker ENV Vars
-| ENV Variable Name            | Description                                                                                        | Default        | Required |
-|------------------------------|----------------------------------------------------------------------------------------------------|----------------|----------|
-| TIBBER2MQTT_DEBUG            | Enable Debug Mode                                                                                  | False          | False    |
-| TIBBER2MQTT_VERBOSE          | Enable Verbose Mode                                                                                | False          | False    |
-| TIBBER2MQTT_TIBBER_EMAIL     | Tibber email                                                                                       |                | True     |
-| TIBBER2MQTT_TIBBER_PASS      | Tibber Password                                                                                    |                | True     |
-| TIBBER2MQTT_TOKEN_FILENAME   | Filename of the File where the Token will be read from and write into                              | token          | False    |
-| TIBBER2MQTT_QUERY_FILENAME   | Filename of the File where the gql query will be saved into (must be located in the config folder) | tibber_bubbles | False    |
-| TIBBER2MQTT_REQUEST_INTERVAL | The request interval                                                                               |                | False    |
-| TIBBER2MQTT_MQTT_SINGLE      | Send each value individually to the MQTT Broker                                                    | False          | False    |
-| TIBBER2MQTT_MQTT_CACHE       | Cache the send values (works best in single (-s) mode)                                             | False          | False    |
-| TIBBER2MQTT_MQTT_HOST        | MQTT Host to connect to                                                                            | localhost      | False    |
-| TIBBER2MQTT_MQTT_PORT        | MQTT port to connect to                                                                            | 1883           | False    |
-| TIBBER2MQTT_MQTT_TOPIC       | MQTT Topic to publish to                                                                           | tibber2mqtt    | False    |
-| TIBBER2MQTT_MQTT_CLIENT_ID   | MQTT Client-ID                                                                                     | tibber2mqtt    | False    |
-| TIBBER2MQTT_MQTT_USER        | MQTT user to connect to                                                                            |                | False    |
-| TIBBER2MQTT_MQTT_PASS        | MQTT password to connect to                                                                        |                | False    |
+| ENV Variable Name                 | Description                                                                                               | Default        | Required |
+|-----------------------------------|-----------------------------------------------------------------------------------------------------------|----------------|----------|
+| TIBBER2MQTT_DEBUG                 | Enable Debug Mode                                                                                         | False          | False    |
+| TIBBER2MQTT_VERBOSE               | Enable Verbose Mode                                                                                       | False          | False    |
+| TIBBER2MQTT_TIBBER_EMAIL          | Tibber email                                                                                              |                | True     |
+| TIBBER2MQTT_TIBBER_PASS           | Tibber Password                                                                                           |                | True     |
+| TIBBER2MQTT_TOKEN_FILENAME        | Filename of the File where the Token will be read from and write into                                     | token          | False    |
+| TIBBER2MQTT_QUERY_FILENAME        | Filename of the File where the gql query will be saved into (must be located in the config folder)        | tibber_bubbles | False    |
+| TIBBER2MQTT_REQUEST_INTERVAL      | The request interval                                                                                      |                | False    |
+| TIBBER2MQTT_MQTT_SINGLE           | Send each value individually to the MQTT Broker                                                           | False          | False    |
+| TIBBER2MQTT_MQTT_SINGLE_SEPARATOR | Separator for the single (-s) parameter. If it is a slash, you\'ll be able to subscripe just to subtopics | /              | False    |
+| TIBBER2MQTT_MQTT_CACHE            | Cache the send values (works best in single (-s) mode)                                                    | False          | False    |
+| TIBBER2MQTT_MQTT_HOST             | MQTT Host to connect to                                                                                   | localhost      | False    |
+| TIBBER2MQTT_MQTT_PORT             | MQTT port to connect to                                                                                   | 1883           | False    |
+| TIBBER2MQTT_MQTT_TOPIC            | MQTT Topic to publish to                                                                                  | tibber2mqtt    | False    |
+| TIBBER2MQTT_MQTT_CLIENT_ID        | MQTT Client-ID                                                                                            | tibber2mqtt    | False    |
+| TIBBER2MQTT_MQTT_USER             | MQTT user to connect to                                                                                   |                | False    |
+| TIBBER2MQTT_MQTT_PASS             | MQTT password to connect to                                                                               |                | False    |
 
 ## Disclaimer & I need your help
 

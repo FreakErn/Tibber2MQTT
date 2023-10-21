@@ -3,6 +3,8 @@ import json
 import logging
 import logging.config
 import os
+import sys
+
 import requests
 import time
 
@@ -178,6 +180,11 @@ def get_args():
                             dest='mqtt_single',
                             help='Send each value individually to the MQTT Broker'
                             )
+    mqtt_group.add_argument('--mqtt-single-separator',
+                            default=os.environ.get(key='TIBBER2MQTT_MQTT_SINGLE_SEPARATOR') or "/",
+                            dest='mqtt_single_separator',
+                            help='Separator for the single (-s) parameter. If it is a slash, you\'ll be able to subscripe just to subtopics'
+                            )
     mqtt_group.add_argument('-c', '--cache',
                             action='store_true',
                             default=os.environ.get(key='TIBBER2MQTT_MQTT_CACHE') or False,
@@ -224,7 +231,7 @@ def get_args():
     return args
 
 
-def flatten(d: MutableMapping, parent_key: str = '', sep: str = '.') -> MutableMapping:
+def flatten(d: MutableMapping, parent_key: str = '', sep: str = '/') -> MutableMapping:
     items = []
     if isinstance(d, MutableMapping):
         for k, v in d.items():
@@ -244,21 +251,23 @@ def flatten(d: MutableMapping, parent_key: str = '', sep: str = '.') -> MutableM
     return dict(items)
 
 
-def send_data(topic, data_to_send, mqtt_cache, mqtt_single):
+def send_data(base_topic, data_to_send, mqtt_cache, mqtt_single, mqtt_single_separator):
     global mqttcache
     logging.debug("Cache %s", mqttcache)
     if mqtt_single:
-        data_to_send = flatten(data_to_send, sep="_")
+        data_to_send = flatten(data_to_send, sep=mqtt_single_separator)
         for k, v in data_to_send.items():
+            topic_to_use = base_topic + "/" + str(k)
             if not mqtt_cache or (mqtt_cache and (k not in mqttcache or mqttcache[k] != v)):
-                logging.info("Send %s -> %s", str(k), str(v))
-                mqttclient.publish(topic + "/" + k, v)
-                mqttcache[k] = v
+                value_to_use = str(v)
+                logging.info("Send %s -> %s", topic_to_use, value_to_use)
+                mqttclient.publish(topic_to_use, value_to_use)
+                mqttcache[k] = value_to_use
             else:
-                logging.debug("Found %s in cache, skip!", str(k))
+                logging.debug("Found %s in cache, skip!", topic_to_use)
     else:
         logging.debug(data_to_send)
-        mqttclient.publish(topic, json.dumps(data_to_send))
+        mqttclient.publish(base_topic, json.dumps(data_to_send))
 
 
 if __name__ == '__main__':
@@ -286,7 +295,8 @@ if __name__ == '__main__':
         try:
             tibber_data = request_tibber_data(token, args.tibber_query_filename)
             token_renew_counter = 0
-            send_data(args.mqtt_topic, tibber_data, mqtt_cache=args.mqtt_cache, mqtt_single=args.mqtt_single)
+            send_data(args.mqtt_topic, tibber_data, mqtt_cache=args.mqtt_cache, mqtt_single=args.mqtt_single,
+                      mqtt_single_separator=args.mqtt_single_separator)
         except TransportQueryError as e:
             logging.error('Failed to send Request: %s', e.errors)
             if token_renew_counter >= 10:
