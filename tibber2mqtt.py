@@ -258,7 +258,7 @@ def send_data(base_topic, data_to_send, mqtt_cache, mqtt_single, mqtt_single_sep
         data_to_send = flatten(data_to_send, sep=mqtt_single_separator)
         for k, v in data_to_send.items():
             topic_to_use = base_topic + "/" + str(k)
-            if not mqtt_cache or (mqtt_cache and (k not in mqttcache or mqttcache[k] != v)):
+            if not mqtt_cache or (mqtt_cache and (k not in mqttcache or mqttcache[k] != str(v))):
                 value_to_use = str(v)
                 logging.info("Send %s -> %s", topic_to_use, value_to_use)
                 mqttclient.publish(topic_to_use, value_to_use)
